@@ -15,9 +15,11 @@
       config: {
         backend: {
           name: 'git-gateway',
-          branch: 'main'
+          branch: 'main',
+          auth_type: 'implicit'
         },
         media_folder: 'images/uploads',
+        display_url: 'https://flourishing-rolypoly-b56309.netlify.app',
         collections: [
           {
             name: 'ai-posts',
