@@ -1,3 +1,4 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: YOUR-GITHUB-USERNAME/dualrevolution
   branch: main
