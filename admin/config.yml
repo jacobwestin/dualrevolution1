@@ -1,4 +1,4 @@
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/dualrevolution
+  repo: Jacobwestin/dualrevolution
   branch: main
