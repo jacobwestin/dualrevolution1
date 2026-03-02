@@ -1,3 +1,33 @@
 backend:
   name: git-gateway
   branch: main
+
+locale: 'en'
+
+publish_mode: editorial_workflow
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+site_url: https://flourishing-rolypoly-b56309.netlify.app
+
+display_url: https://flourishing-rolypoly-b56309.netlify.app
+
+collections:
+  - name: "ai-posts"
+    label: "AI Revolution Posts"
+    folder: "ai-posts"
+    create: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Date", name: "date", widget: "datetime"}
+
+  - name: "robot-posts"
+    label: "Robot Revolution Posts"
+    folder: "robot-posts"
+    create: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Date", name: "date", widget: "datetime"}
