@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dual Revolution — The Machines Are Moving. Are You?</title>
+<meta name="description" content="The definitive briefing on the AI and Robot revolution. Built for founders, investors, and builders who refuse to be blindsided. Create, don't consume.">
+<meta property="og:title" content="The Dual Revolution">
+<meta property="og:description" content="Two revolutions. One countdown. Stay ahead or get left behind.">
+<meta property="og:image" content="https://dualrevolution.com/og-image.jpg">
+<link rel="canonical" href="https://dualrevolution.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #050507;
+    --bg2: #0a0a0f;
+    --ai: #1a6cff;
+    --ai-dim: rgba(26,108,255,0.08);
+    --ai-glow: rgba(26,108,255,0.3);
+    --robot: #cc1a1a;
+    --robot-dim: rgba(204,26,26,0.08);
+    --robot-glow: rgba(204,26,26,0.3);
+    --white: #f0f0f0;
+    --muted: #666;
+    --border: rgba(255,255,255,0.07);
+    --mono: 'Share Tech Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--body);
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* ─── CANVAS BACKGROUND ─── */
+  #bg-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.35;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 64px;
+    background: rgba(5,5,7,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--white); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-countdown {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--robot);
+    letter-spacing: 0.08em;
+    background: rgba(255,69,0,0.08);
+    border: 1px solid rgba(255,69,0,0.2);
+    padding: 0.3rem 0.75rem;
+    border-radius: 3px;
+  }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: #fff;
+    background: var(--ai);
+    border: none;
+    padding: 0.5rem 1.1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: opacity 0.2s;
+    border-radius: 2px;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    transition: 0.3s;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+  }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-h1 {
+    font-family: var(--display);
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-h1 .word-ai { color: var(--ai); }
+  .hero-h1 .word-robot { color: var(--robot); }
+
+  .hero-sub {
+    font-family: var(--body);
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    color: rgba(240,240,240,0.55);
+    max-width: 560px;
+    line-height: 1.65;
+    margin-bottom: 3.5rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+    font-weight: 300;
+  }
+
+  /* ─── COUNTDOWN ─── */
+  .countdown-wrap {
+    animation: fadeUp 0.8s 0.3s ease both;
+    margin-bottom: 3rem;
+  }
+
+  .countdown-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--robot);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .countdown-label::before,
+  .countdown-label::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--robot);
+    opacity: 0.5;
+  }
+
+  .countdown-clock {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .clock-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .clock-digit {
+    font-family: var(--mono);
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--white);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 0.4rem 0.6rem;
+    min-width: clamp(90px, 12vw, 160px);
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 0 30px rgba(255,69,0,0.08), inset 0 0 20px rgba(0,0,0,0.4);
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255,69,0,0.08), inset 0 0 20px rgba(0,0,0,0.4); }
+    50% { box-shadow: 0 0 40px rgba(255,69,0,0.2), inset 0 0 20px rgba(0,0,0,0.4); }
+  }
+
+  .clock-sep {
+    font-family: var(--mono);
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    color: rgba(255,69,0,0.4);
+    line-height: 1;
+    padding-top: 0.4rem;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .clock-unit-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ─── HERO BUTTONS ─── */
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .btn-ai, .btn-robot {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 2px;
+  }
+
+  .btn-ai {
+    background: var(--ai);
+    color: #fff;
+    box-shadow: 0 0 30px rgba(26,108,255,0.25);
+  }
+  .btn-ai:hover { box-shadow: 0 0 50px rgba(26,108,255,0.5); transform: translateY(-2px); }
+
+  .btn-robot {
+    background: transparent;
+    color: var(--robot);
+    border: 1px solid var(--robot);
+    box-shadow: 0 0 20px rgba(255,69,0,0.15);
+  }
+  .btn-robot:hover { background: var(--robot); color: #fff; box-shadow: 0 0 50px rgba(255,69,0,0.4); transform: translateY(-2px); }
+
+  /* ─── SECTION HEADERS ─── */
+  .section-header {
+    text-align: center;
+    padding: 6rem 2rem 3.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border-radius: 2px;
+  }
+
+  .section-tag.ai { color: var(--ai); background: var(--ai-dim); border: 1px solid rgba(0,212,255,0.2); }
+  .section-tag.robot { color: var(--robot); background: var(--robot-dim); border: 1px solid rgba(255,69,0,0.2); }
+
+  .section-h2 {
+    font-family: var(--display);
+    font-size: clamp(3.5rem, 7vw, 7rem);
+    letter-spacing: 0.04em;
+    line-height: 0.9;
+    margin-bottom: 1rem;
+  }
+
+  .section-h2.ai-color { color: var(--ai); }
+  .section-h2.robot-color { color: var(--robot); }
+
+  .section-sub {
+    font-family: var(--body);
+    font-size: 1rem;
+    color: rgba(240,240,240,0.45);
+    font-weight: 300;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* ─── DIVIDER LINE ─── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
+  }
+
+  /* ─── BLOG GRID ─── */
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin: 0 0 4rem;
+    position: relative;
+    z-index: 1;
+    background: var(--border);
+  }
+
+  .post-card {
+    background: var(--bg2);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .post-card.ai-card::before { background: var(--ai); }
+  .post-card.robot-card::before { background: var(--robot); }
+  .post-card:hover::before { opacity: 1; }
+  .post-card:hover { background: rgba(255,255,255,0.03); }
+
+  .post-thumb {
+    width: 100%;
+    height: 160px;
+    background: var(--border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .post-thumb.ai-thumb { background: var(--ai-dim); }
+  .post-thumb.robot-thumb { background: var(--robot-dim); }
+
+  .thumb-icon {
+    font-size: 2rem;
+    opacity: 0.3;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .post-category {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+  }
+
+  .post-category.ai { color: var(--ai); background: var(--ai-dim); }
+  .post-category.robot { color: var(--robot); background: var(--robot-dim); }
+
+  .author-badge {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+  }
+
+  .author-badge.human { color: #aaa; }
+  .author-badge.ai-gen { color: var(--ai); border-color: rgba(0,212,255,0.2); }
+
+  .post-title {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+
+  .post-excerpt {
+    font-family: var(--body);
+    font-size: 0.85rem;
+    color: rgba(240,240,240,0.5);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .post-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .post-date {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .read-more {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0;
+  }
+
+  .read-more.ai { color: var(--ai); }
+  .read-more.ai:hover { color: #fff; }
+  .read-more.robot { color: var(--robot); }
+  .read-more.robot:hover { color: #fff; }
+
+  /* ─── NEWSLETTER BOX ─── */
+  .newsletter-box {
+    margin: 0 2rem 6rem;
+    border: 1px solid var(--border);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .newsletter-box.ai-box { border-color: rgba(0,212,255,0.15); background: var(--ai-dim); }
+  .newsletter-box.robot-box { border-color: rgba(255,69,0,0.15); background: var(--robot-dim); }
+
+  .nl-heading {
+    font-family: var(--display);
+    font-size: 2.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .nl-sub {
+    font-family: var(--body);
+    font-size: 0.95rem;
+    color: rgba(240,240,240,0.5);
+    font-weight: 300;
+    max-width: 500px;
+  }
+
+  .nl-tiers {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .tier-card {
+    flex: 1;
+    min-width: 200px;
+    max-width: 260px;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 3px;
+    text-align: left;
+    background: var(--bg);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .tier-card:hover { transform: translateY(-4px); }
+  .tier-card.ai:hover { border-color: var(--ai); box-shadow: 0 8px 30px rgba(0,212,255,0.15); }
+  .tier-card.robot:hover { border-color: var(--robot); box-shadow: 0 8px 30px rgba(255,69,0,0.15); }
+
+  .tier-price {
+    font-family: var(--display);
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.05em;
+  }
+
+  .tier-price.ai { color: var(--ai); }
+  .tier-price.robot { color: var(--robot); }
+
+  .tier-name {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .tier-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tier-features li {
+    font-family: var(--body);
+    font-size: 0.8rem;
+    color: rgba(240,240,240,0.6);
+    font-weight: 300;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .tier-features li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    font-size: 0.7rem;
+    opacity: 0.5;
+  }
+
+  .tier-cta-btn {
+    display: block;
+    width: 100%;
+    margin-top: 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.7rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .tier-cta-btn.ai {
+    background: var(--ai);
+    color: #fff;
+    border: none;
+  }
+  .tier-cta-btn.ai.outline {
+    background: transparent;
+    color: var(--ai);
+    border: 1px solid var(--ai);
+  }
+  .tier-cta-btn.ai.outline:hover { background: var(--ai); color: #fff; }
+
+  .tier-cta-btn.robot {
+    background: var(--robot);
+    color: #fff;
+    border: none;
+  }
+  .tier-cta-btn.robot.outline {
+    background: transparent;
+    color: var(--robot);
+    border: 1px solid var(--robot);
+  }
+  .tier-cta-btn.robot.outline:hover { background: var(--robot); color: #fff; }
+
+  /* ─── SPONSORS STRIP ─── */
+  #sponsors {
+    position: relative;
+    z-index: 1;
+    padding: 4rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .sponsors-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .sponsor-logos {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .sponsor-slot {
+    width: 140px;
+    height: 50px;
+    border: 1px dashed rgba(255,255,255,0.12);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.15);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .sponsor-slot:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.4); }
+
+  .partner-slot {
+    width: auto;
+    min-width: 120px;
+    height: 52px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.03);
+    padding: 0 1.5rem;
+    color: rgba(255,255,255,0.45);
+    cursor: default;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .partner-slot:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.06);
+    transform: translateY(-2px);
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    position: relative;
+    z-index: 1;
+    padding: 8rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-h2 {
+    font-family: var(--display);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    letter-spacing: 0.04em;
+    margin-bottom: 2rem;
+    line-height: 0.95;
+  }
+
+  .about-body {
+    font-family: var(--body);
+    font-size: 1.05rem;
+    color: rgba(240,240,240,0.5);
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 3rem;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-body strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .author-cards {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .author-card {
+    border: 1px solid var(--border);
+    padding: 2rem;
+    width: 240px;
+    text-align: center;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.02);
+    transition: transform 0.2s;
+  }
+  .author-card:hover { transform: translateY(-4px); }
+
+  .author-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+  }
+
+  .author-avatar.human { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+  .author-avatar.ai-bot { background: var(--ai-dim); border: 1px solid rgba(0,212,255,0.2); }
+
+  .author-name {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.3rem;
+  }
+
+  .author-role {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ─── STICKY BOTTOM BAR ─── */
+  #sticky-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+    background: rgba(5,5,7,0.95);
+    border-top: 1px solid rgba(255,69,0,0.3);
+    padding: 0.85rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+    backdrop-filter: blur(20px);
+  }
+  #sticky-bar.visible { transform: translateY(0); }
+
+  .sticky-text {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: rgba(240,240,240,0.7);
+  }
+
+  .sticky-cta {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ai);
+    background: none;
+    border: 1px solid var(--ai);
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .sticky-cta:hover { background: var(--ai); color: #fff; }
+
+  .sticky-close {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    position: absolute;
+    right: 1.5rem;
+  }
+  .sticky-close:hover { color: var(--white); }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    max-width: 700px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 3rem;
+    border-radius: 6px;
+    position: relative;
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.97) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--white); }
+
+  .modal-title {
+    font-family: var(--display);
+    font-size: 2.5rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-sub {
+    font-family: var(--body);
+    font-size: 0.9rem;
+    color: rgba(240,240,240,0.5);
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .modal-email-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .modal-input {
+    flex: 1;
+    min-width: 220px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    padding: 0.85rem 1rem;
+    outline: none;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+  .modal-input:focus { border-color: var(--ai); }
+  .modal-input::placeholder { color: var(--muted); }
+
+  .modal-submit {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.5rem;
+    background: var(--ai);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: opacity 0.2s;
+  }
+  .modal-submit:hover { opacity: 0.85; }
+
+  .modal-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+  }
+  .footer-logo span { color: var(--white); }
+
+  .footer-tagline {
+    font-family: var(--body);
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-links a {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-link {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .social-link:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.15);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .nav-links, .nav-countdown { display: none; }
+    .hamburger { display: flex; }
+    .nav-cta { display: none; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem;
+      flex-direction: column;
+      gap: 1.5rem;
+      z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .newsletter-box { margin: 0 1rem 4rem; padding: 2rem 1.5rem; }
+    .modal { padding: 2rem; }
+    .nl-tiers { flex-direction: column; align-items: center; }
+    .clock-digit { font-size: 2.5rem; min-width: 65px; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-h1 { font-size: 3.5rem; }
+    .sponsor-logos { gap: 1rem; }
+    .sponsor-slot { width: 100px; font-size: 0.45rem; }
+  }
+
+  /* ─── SECTION WRAP ─── */
+  .section-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .full-bleed-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">THE <span>DUAL</span> REVOLUTION</a>
+  <ul class="nav-links">
+    <li><a href="#ai-revolution">AI Revolution</a></li>
+    <li><a href="#robot-revolution">Robot Revolution</a></li>
+    <li><a href="#newsletter">Newsletter</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <div class="nav-countdown" id="nav-countdown">T-MINUS: --d --h --m --s</div>
+  <button class="nav-cta" onclick="openModal()">Get the Newsletter</button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#ai-revolution" onclick="closeMobileMenu()">AI Revolution</a>
+  <a href="#robot-revolution" onclick="closeMobileMenu()">Robot Revolution</a>
+  <a href="#newsletter" onclick="closeMobileMenu()">Newsletter</a>
+  <a href="#about" onclick="closeMobileMenu()">About</a>
+  <a href="#" onclick="openModal(); closeMobileMenu()">Get the Newsletter →</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-label">// Briefing active — Both revolutions in progress</p>
+  <h1 class="hero-h1">
+    The<br>
+    <span class="word-ai">Dual</span><br>
+    <span class="word-robot">Revolution</span>
+  </h1>
+  <p class="hero-sub">Artificial Intelligence. Autonomous Robotics. Two forces reshaping civilization — simultaneously. One countdown to the point of no return.</p>
+
+  <div class="countdown-wrap">
+    <p class="countdown-label">Estimated Point of No Return</p>
+    <div class="countdown-clock">
+      <div class="clock-unit">
+        <div class="clock-digit" id="cd-days">---</div>
+        <span class="clock-unit-label">Days</span>
+      </div>
+      <div class="clock-sep">:</div>
+      <div class="clock-unit">
+        <div class="clock-digit" id="cd-hours">--</div>
+        <span class="clock-unit-label">Hours</span>
+      </div>
+      <div class="clock-sep">:</div>
+      <div class="clock-unit">
+        <div class="clock-digit" id="cd-mins">--</div>
+        <span class="clock-unit-label">Minutes</span>
+      </div>
+      <div class="clock-sep">:</div>
+      <div class="clock-unit">
+        <div class="clock-digit" id="cd-secs">--</div>
+        <span class="clock-unit-label">Seconds</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-btns">
+    <a href="#ai-revolution" class="btn-ai">Enter the AI Revolution →</a>
+    <a href="#robot-revolution" class="btn-robot">Enter the Robot Revolution →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AI REVOLUTION -->
+<section id="ai-revolution">
+  <div class="section-header">
+    <span class="section-tag ai">// Section 01</span>
+    <h2 class="section-h2 ai-color">The AI Revolution</h2>
+    <p class="section-sub">From ChatGPT to AGI — we track every move, model drop, and power shift.</p>
+  </div>
+
+  <div class="full-bleed-grid">
+    <div class="blog-grid">
+      <!-- Post 1 -->
+      <div class="post-card ai-card">
+        <div class="post-thumb ai-thumb">
+          <span class="thumb-icon">⬡</span>
+        </div>
+        <div class="post-meta">
+          <span class="post-category ai">Model Releases</span>
+          <span class="author-badge human">👤 Human</span>
+        </div>
+        <h3 class="post-title">OpenAI's Next Model Isn't AGI. It's Something Worse.</h3>
+        <p class="post-excerpt">The leaked benchmarks don't just break records — they break the assumptions we've been building our careers on. Here's what the insiders aren't saying publicly.</p>
+        <div class="post-footer">
+          <span class="post-date">FEB 18, 2025 · 6 MIN READ</span>
+          <button class="read-more ai">Read More →</button>
+        </div>
+      </div>
+
+      <!-- Post 2 -->
+      <div class="post-card ai-card">
+        <div class="post-thumb ai-thumb">
+          <span class="thumb-icon">◈</span>
+        </div>
+        <div class="post-meta">
+          <span class="post-category ai">AI Policy</span>
+          <span class="author-badge ai-gen">⚡ AI Report</span>
+        </div>
+        <h3 class="post-title">The EU's AI Act Is Already Obsolete. Here's Why That Matters.</h3>
+        <p class="post-excerpt">Regulators are writing laws for systems that existed 18 months ago. The gap between legislation and capability is now a chasm — and the industry knows it.</p>
+        <div class="post-footer">
+          <span class="post-date">FEB 14, 2025 · 4 MIN READ</span>
+          <button class="read-more ai">Read More →</button>
+        </div>
+      </div>
+
+      <!-- Post 3 -->
+      <div class="post-card ai-card">
+        <div class="post-thumb ai-thumb">
+          <span class="thumb-icon">⟁</span>
+        </div>
+        <div class="post-meta">
+          <span class="post-category ai">Big Tech</span>
+          <span class="author-badge human">👤 Human</span>
+        </div>
+        <h3 class="post-title">Google DeepMind Just Quietly Became the Most Dangerous Lab on Earth</h3>
+        <p class="post-excerpt">While everyone watches OpenAI, DeepMind shipped three frontier breakthroughs in 60 days. No press release. No tweet storm. Just results.</p>
+        <div class="post-footer">
+          <span class="post-date">FEB 10, 2025 · 8 MIN READ</span>
+          <button class="read-more ai">Read More →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Newsletter -->
+  <div class="newsletter-box ai-box" id="newsletter">
+    <p class="section-tag ai">// Intelligence Briefing</p>
+    <h3 class="nl-heading">Stay Ahead of the AI Curve</h3>
+    <p class="nl-sub">Join founders, investors, and builders getting the briefing that cuts through the noise.</p>
+    <div class="nl-tiers">
+      <div class="tier-card ai" onclick="openModal()">
+        <div class="tier-price ai">Free</div>
+        <div class="tier-name">Weekly Dispatch</div>
+        <ul class="tier-features">
+          <li>Weekly AI briefing</li>
+          <li>Top model updates</li>
+          <li>Policy roundup</li>
+        </ul>
+        <button class="tier-cta-btn ai outline">Subscribe Free</button>
+      </div>
+      <div class="tier-card ai" onclick="openModal()">
+        <div class="tier-price ai">$9<span style="font-size:1rem;color:var(--muted)">/mo</span></div>
+        <div class="tier-name">Insider Access</div>
+        <ul class="tier-features">
+          <li>Daily dispatches</li>
+          <li>Early analysis</li>
+          <li>Deeper signal, less noise</li>
+        </ul>
+        <button class="tier-cta-btn ai">Go Insider</button>
+      </div>
+      <div class="tier-card ai" onclick="openModal()">
+        <div class="tier-price ai">$49<span style="font-size:1rem;color:var(--muted)">/mo</span></div>
+        <div class="tier-name">Investor Intel</div>
+        <ul class="tier-features">
+          <li>Market signals</li>
+          <li>Company movement</li>
+          <li>Investment angles</li>
+        </ul>
+        <button class="tier-cta-btn ai outline">Go Investor</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORS STRIP -->
+<div id="sponsors">
+  <p class="sponsors-label">// AI Network Partners & Collaborators</p>
+  <div class="sponsor-logos">
+
+    <!-- OpenAI -->
+    <div class="sponsor-slot partner-slot" title="OpenAI">
+      <svg width="90" height="24" viewBox="0 0 90 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.598 9.878a5.976 5.976 0 0 0-.513-4.907 6.04 6.04 0 0 0-6.5-2.894A5.976 5.976 0 0 0 9.074 0a6.04 6.04 0 0 0-5.76 4.184 5.976 5.976 0 0 0-3.988 2.894 6.04 6.04 0 0 0 .743 7.046 5.976 5.976 0 0 0 .513 4.907 6.04 6.04 0 0 0 6.5 2.894A5.976 5.976 0 0 0 11.594 24a6.04 6.04 0 0 0 5.762-4.186 5.976 5.976 0 0 0 3.988-2.894 6.04 6.04 0 0 0-.746-7.042zm-9.004 12.614a4.48 4.48 0 0 1-2.878-1.04l.142-.08 4.777-2.758a.787.787 0 0 0 .397-.687v-6.735l2.02 1.167a.073.073 0 0 1 .04.056v5.574a4.5 4.5 0 0 1-4.498 4.503zm-9.68-4.13a4.48 4.48 0 0 1-.536-3.017l.142.085 4.778 2.758a.789.789 0 0 0 .793 0l5.832-3.367v2.333a.073.073 0 0 1-.03.063L7.694 19.97a4.5 4.5 0 0 1-5.78-1.607zm-1.26-10.44a4.475 4.475 0 0 1 2.34-1.97v5.666a.787.787 0 0 0 .396.686l5.83 3.365-2.02 1.167a.073.073 0 0 1-.07.007L2.822 13.6a4.5 4.5 0 0 1-.168-5.677zm16.598 3.864-5.832-3.367 2.02-1.165a.073.073 0 0 1 .07-.007l4.706 2.716a4.494 4.494 0 0 1-.696 8.108v-5.567a.786.786 0 0 0-.268-.718zm2.01-3.023-.142-.086-4.776-2.76a.789.789 0 0 0-.794 0L7.718 9.284V6.95a.073.073 0 0 1 .028-.063l4.707-2.714a4.496 4.496 0 0 1 6.689 4.656l-.072.03-.068.04zm-12.638 4.16L4.603 11.76a.073.073 0 0 1-.04-.057V6.13a4.496 4.496 0 0 1 7.374-3.453l-.142.08-4.776 2.758a.787.787 0 0 0-.397.686l-.007 6.728zm1.097-2.365 2.596-1.498 2.596 1.496v2.993l-2.596 1.498-2.596-1.498V10.558z" fill="currentColor"/>
+        <text x="28" y="17" font-family="'DM Sans', sans-serif" font-size="13" font-weight="500" fill="currentColor">OpenAI</text>
+      </svg>
+    </div>
+
+    <!-- Anthropic -->
+    <div class="sponsor-slot partner-slot" title="Anthropic">
+      <svg width="110" height="24" viewBox="0 0 110 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="17" font-family="'DM Sans', sans-serif" font-size="13" font-weight="500" fill="currentColor" letter-spacing="0.5">Anthropic</text>
+      </svg>
+    </div>
+
+    <!-- xAI -->
+    <div class="sponsor-slot partner-slot" title="xAI">
+      <svg width="60" height="24" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="18" font-family="'Share Tech Mono', monospace" font-size="18" font-weight="700" fill="currentColor" letter-spacing="-1">xAI</text>
+      </svg>
+    </div>
+
+    <!-- Vercel -->
+    <div class="sponsor-slot partner-slot" title="Vercel">
+      <svg width="100" height="24" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L23 21H1L12 2Z" fill="currentColor"/>
+        <text x="30" y="17" font-family="'DM Sans', sans-serif" font-size="13" font-weight="500" fill="currentColor">Vercel</text>
+      </svg>
+    </div>
+
+    <!-- Pinecone -->
+    <div class="sponsor-slot partner-slot" title="Pinecone">
+      <svg width="120" height="24" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 2 C8 2 4 7 4 12 C4 16 6 19 8 20 C10 19 12 16 12 12 C12 7 8 2 8 2Z" fill="currentColor" opacity="0.9"/>
+        <path d="M8 6 C8 6 5.5 10 5.5 13.5 C5.5 16 6.5 18 8 19 C9.5 18 10.5 16 10.5 13.5 C10.5 10 8 6 8 6Z" fill="currentColor" opacity="0.4"/>
+        <text x="20" y="17" font-family="'DM Sans', sans-serif" font-size="13" font-weight="500" fill="currentColor">Pinecone</text>
+      </svg>
+    </div>
+
+  </div>
+</div>
+
+<!-- ROBOT REVOLUTION -->
+<section id="robot-revolution">
+  <div class="section-header">
+    <span class="section-tag robot">// Section 02</span>
+    <h2 class="section-h2 robot-color">The Robot Revolution</h2>
+    <p class="section-sub">Humanoids, drones, automation — the physical world is the next frontier.</p>
+  </div>
+
+  <div class="full-bleed-grid">
+    <div class="blog-grid">
+      <!-- Post 1 -->
+      <div class="post-card robot-card">
+        <div class="post-thumb robot-thumb">
+          <span class="thumb-icon">⚙</span>
+        </div>
+        <div class="post-meta">
+          <span class="post-category robot">Humanoids</span>
+          <span class="author-badge human">👤 Human</span>
+        </div>
+        <h3 class="post-title">Figure's New Robot Just Outperformed Its Entire Human Team in a Warehouse Trial</h3>
+        <p class="post-excerpt">The data from the pilot isn't public yet. But three people in the room told us the same thing: they didn't expect it to work this well, this fast.</p>
+        <div class="post-footer">
+          <span class="post-date">FEB 20, 2025 · 5 MIN READ</span>
+          <button class="read-more robot">Read More →</button>
+        </div>
+      </div>
+
+      <!-- Post 2 -->
+      <div class="post-card robot-card">
+        <div class="post-thumb robot-thumb">
+          <span class="thumb-icon">◎</span>
+        </div>
+        <div class="post-meta">
+          <span class="post-category robot">Defense Robotics</span>
+          <span class="author-badge ai-gen">⚡ AI Report</span>
+        </div>
+        <h3 class="post-title">The Pentagon Is Quietly Deploying Autonomous Drones You've Never Heard Of</h3>
+        <p class="post-excerpt">Not the ones in the press releases. The ones in the budget line items that no journalist has asked about — until now.</p>
+        <div class="post-footer">
+          <span class="post-date">FEB 16, 2025 · 7 MIN READ</span>
+          <button class="read-more robot">Read More →</button>
+        </div>
+      </div>
+
+      <!-- Post 3 -->
+      <div class="post-card robot-card">
+        <div class="post-thumb robot-thumb">
+          <span class="thumb-icon">⬡</span>
+        </div>
+        <div class="post-meta">
+          <span class="post-category robot">Industrial Automation</span>
+          <span class="author-badge human">👤 Human</span>
+        </div>
+        <h3 class="post-title">Tesla Optimus Isn't the Story. The Battery Tech Behind It Is.</h3>
+        <p class="post-excerpt">Everyone's watching the robot walk. Nobody's asking why it can run for 14 hours on a charge that shouldn't physically be possible yet.</p>
+        <div class="post-footer">
+          <span class="post-date">FEB 12, 2025 · 6 MIN READ</span>
+          <button class="read-more robot">Read More →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Robot Newsletter -->
+  <div class="newsletter-box robot-box">
+    <p class="section-tag robot">// Hardware Briefing</p>
+    <h3 class="nl-heading">Track the Robot Takeover</h3>
+    <p class="nl-sub">From factory floors to boardrooms — intel for builders who want to stay a step ahead of the physical revolution.</p>
+    <div class="nl-tiers">
+      <div class="tier-card robot" onclick="openModal()">
+        <div class="tier-price robot">Free</div>
+        <div class="tier-name">Weekly Dispatch</div>
+        <ul class="tier-features">
+          <li>Weekly robot briefing</li>
+          <li>Deployment updates</li>
+          <li>Industry headlines</li>
+        </ul>
+        <button class="tier-cta-btn robot outline">Subscribe Free</button>
+      </div>
+      <div class="tier-card robot" onclick="openModal()">
+        <div class="tier-price robot">$9<span style="font-size:1rem;color:var(--muted)">/mo</span></div>
+        <div class="tier-name">Floor-to-Board</div>
+        <ul class="tier-features">
+          <li>Daily robot intel</li>
+          <li>Supply chain signals</li>
+          <li>Founder interviews</li>
+        </ul>
+        <button class="tier-cta-btn robot">Go Insider</button>
+      </div>
+      <div class="tier-card robot" onclick="openModal()">
+        <div class="tier-price robot">$49<span style="font-size:1rem;color:var(--muted)">/mo</span></div>
+        <div class="tier-name">Deal Flow</div>
+        <ul class="tier-features">
+          <li>Acquisition alerts</li>
+          <li>Startup radar</li>
+          <li>Investment deal flow</li>
+        </ul>
+        <button class="tier-cta-btn robot outline">Go Investor</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div id="about">
+    <p class="about-tag">// Why We Built This</p>
+    <h2 class="about-h2">Create.<br>Don't Consume.</h2>
+    <p class="about-body">
+      We're not fear-mongers. We're not hype machines. We're the people who believe the only rational response to the dual revolution is to <strong>build something</strong> — not scroll something. This site exists to keep you <strong>informed, urgent, and ahead</strong>. Whether you're a founder, investor, student, or just someone who doesn't want to be blindsided — this is your briefing room. The clock is ticking. Two revolutions don't wait for anyone.
+    </p>
+    <div class="author-cards">
+      <div class="author-card">
+        <div class="author-avatar human">👤</div>
+        <div class="author-name">The Editors</div>
+        <div class="author-role">// Human Correspondents</div>
+      </div>
+      <div class="author-card">
+        <div class="author-avatar ai-bot">⚡</div>
+        <div class="author-name">DR-01</div>
+        <div class="author-role">// AI Correspondent</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">THE <span>DUAL</span> REVOLUTION</div>
+    <p class="footer-tagline">"The machines are moving. Are you?"</p>
+    <ul class="footer-links">
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="#">Advertise With Us</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="social-links">
+      <a class="social-link" title="X/Twitter">𝕏</a>
+      <a class="social-link" title="Instagram">◈</a>
+      <a class="social-link" title="YouTube">▶</a>
+      <a class="social-link" title="LinkedIn">in</a>
+    </div>
+    <p class="footer-copy">Published by humans and machines alike. © 2025 The Dual Revolution. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- STICKY BAR -->
+<div id="sticky-bar">
+  <span class="sticky-text">⏱ The clock is ticking.</span>
+  <button class="sticky-cta" onclick="openModal()">Join 10,000+ readers staying ahead →</button>
+  <button class="sticky-close" onclick="document.getElementById('sticky-bar').classList.remove('visible')">✕</button>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2 class="modal-title">Join the Briefing</h2>
+    <p class="modal-sub">Choose your intelligence tier. Cancel anytime. No fluff, ever.</p>
+    <div class="modal-email-row">
+      <input type="email" class="modal-input" placeholder="your@email.com">
+      <button class="modal-submit" onclick="handleFreeSignup()">Subscribe Free</button>
+    </div>
+    <div class="modal-tiers">
+      <div class="tier-card ai" style="cursor:pointer" onclick="handlePaidSignup('AI Insider - $9/mo')">
+        <div class="tier-price ai">$9/mo</div>
+        <div class="tier-name">AI Insider</div>
+        <ul class="tier-features">
+          <li>Daily AI dispatches</li>
+          <li>Deep analysis</li>
+          <li>Early access reports</li>
+        </ul>
+        <button class="tier-cta-btn ai">Get AI Insider</button>
+      </div>
+      <div class="tier-card robot" style="cursor:pointer" onclick="handlePaidSignup('Robot Insider - $9/mo')">
+        <div class="tier-price robot">$9/mo</div>
+        <div class="tier-name">Robot Insider</div>
+        <ul class="tier-features">
+          <li>Daily robot intel</li>
+          <li>Supply chain data</li>
+          <li>Deployment alerts</li>
+        </ul>
+        <button class="tier-cta-btn robot">Get Robot Insider</button>
+      </div>
+      <div class="tier-card" style="cursor:pointer;border-color:rgba(255,255,255,0.15)" onclick="handlePaidSignup('Investor Intel - $49/mo')">
+        <div class="tier-price" style="color:#fff;font-family:var(--display);font-size:2rem;margin-bottom:0.3rem">$49/mo</div>
+        <div class="tier-name">Investor Intel</div>
+        <ul class="tier-features">
+          <li>Both revolutions</li>
+          <li>Market signals</li>
+          <li>Deal flow + M&A radar</li>
+        </ul>
+        <button class="tier-cta-btn ai outline" style="border-color:rgba(255,255,255,0.2);color:#fff">Go Investor</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── CANVAS PARTICLE GRID ───
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function initParticles() {
+  particles = [];
+  const count = Math.floor((W * H) / 18000);
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      size: Math.random() * 1.5 + 0.3,
+      color: Math.random() > 0.5 ? '#1a6cff' : '#cc1a1a',
+      alpha: Math.random() * 0.5 + 0.1
+    });
+  }
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0) p.x = W;
+    if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H;
+    if (p.y > H) p.y = 0;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = p.alpha;
+    ctx.fill();
+  });
+
+  // Draw connections
+  ctx.globalAlpha = 0.04;
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = particles[i].color;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(drawParticles);
+}
+
+window.addEventListener('resize', () => { resize(); initParticles(); });
+resize();
+initParticles();
+drawParticles();
+
+// ─── COUNTDOWN TIMER ───
+// Target: June 16, 2026 (approx 600 days from launch)
+const TARGET_DATE = new Date('2028-01-23T00:00:00Z').getTime();
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function updateCountdown() {
+  const now = Date.now();
+  const diff = TARGET_DATE - now;
+
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '000';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-mins').textContent = '00';
+    document.getElementById('cd-secs').textContent = '00';
+    document.getElementById('nav-countdown').textContent = 'T-MINUS: ZERO HOUR';
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+  document.getElementById('cd-days').textContent = String(days).padStart(3, '0');
+  document.getElementById('cd-hours').textContent = pad(hours);
+  document.getElementById('cd-mins').textContent = pad(mins);
+  document.getElementById('cd-secs').textContent = pad(secs);
+  document.getElementById('nav-countdown').textContent = `T-MINUS: ${days}d ${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ─── STICKY BAR ───
+let stickyShown = false;
+window.addEventListener('scroll', () => {
+  if (!stickyShown && window.scrollY > 600) {
+    document.getElementById('sticky-bar').classList.add('visible');
+    stickyShown = true;
+  }
+});
+
+// ─── MODAL ───
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+function handleFreeSignup() {
+  const email = document.querySelector('.modal-input').value;
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  alert(`You're in! Welcome to The Dual Revolution. We'll be in touch at ${email}.`);
+  closeModal();
+}
+
+function handlePaidSignup(tier) {
+  alert(`Redirecting to checkout for: ${tier}\n\n(Connect Stripe or payment processor here.)`);
+}
+
+// ─── HAMBURGER MENU ───
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobile-menu').classList.toggle('open');
+});
+
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
+// ─── ESC KEY ───
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
